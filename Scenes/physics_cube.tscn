@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://dh2clb8t3lg4w"]
+
+[ext_resource type="Script" uid="uid://5r1gtd0sdmae" path="res://Scripts/xr_grabbable.gd" id="1_xnj0r"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_owum4"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6cx45"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[node name="PhysicsCube" type="RigidBody3D" unique_id=750296286]
+collision_layer = 2
+collision_mask = 3
+continuous_cd = true
+script = ExtResource("1_xnj0r")
+
+[node name="TestCube" type="MeshInstance3D" parent="." unique_id=1519672482]
+mesh = SubResource("BoxMesh_owum4")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1794837952]
+shape = SubResource("BoxShape3D_6cx45")

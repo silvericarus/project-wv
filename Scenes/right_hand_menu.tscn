@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://b3trcqf07qw3"]
+
+[sub_resource type="QuadMesh" id="Quad_panel"]
+size = Vector2(0.36, 0.27)
+
+[sub_resource type="StyleBoxFlat" id="Style_panel"]
+content_margin_left = 24.0
+content_margin_top = 24.0
+content_margin_right = 24.0
+content_margin_bottom = 24.0
+bg_color = Color(0.025, 0.045, 0.065, 0.98)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.15, 0.65, 0.8, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[node name="RightHandMenu" type="Node3D" unique_id=1504659679]
+
+[node name="Display" type="MeshInstance3D" parent="." unique_id=736473413]
+cast_shadow = 0
+mesh = SubResource("Quad_panel")
+
+[node name="MenuViewport" type="SubViewport" parent="." unique_id=896255592]
+disable_3d = true
+transparent_bg = true
+size = Vector2i(640, 480)
+render_target_update_mode = 0
+
+[node name="UI" type="PanelContainer" parent="MenuViewport" unique_id=152669766]
+offset_right = 640.0
+offset_bottom = 480.0
+theme_override_styles/panel = SubResource("Style_panel")
+
+[node name="Layout" type="VBoxContainer" parent="MenuViewport/UI" unique_id=362646576]
+layout_mode = 2
+theme_override_constants/separation = 24
+alignment = 1
+
+[node name="Title" type="Label" parent="MenuViewport/UI/Layout" unique_id=1743564325]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.97, 1, 1)
+theme_override_font_sizes/font_size = 34
+text = "CREACIÓN DE OBJETOS"
+horizontal_alignment = 1
+
+[node name="Hint" type="Label" parent="MenuViewport/UI/Layout" unique_id=288293769]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.76, 0.83, 1)
+theme_override_font_sizes/font_size = 24
+text = "B · Cerrar"
+horizontal_alignment = 1

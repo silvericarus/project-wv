@@ -1,0 +1,84 @@
+[gd_scene format=3 uid="uid://bktercc17qklf"]
+
+[ext_resource type="Script" uid="uid://ddd7p0lb8hw5q" path="res://Scripts/desktop_player.gd" id="1_wglfh"]
+[ext_resource type="PackedScene" uid="uid://dh2clb8t3lg4w" path="res://Scenes/physics_cube.tscn" id="2_oq7ra"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_owum4"]
+radius = 0.3
+height = 1.75
+
+[node name="DesktopPlayer" type="CharacterBody3D" unique_id=2080402090]
+script = ExtResource("1_wglfh")
+cube_scene = ExtResource("2_oq7ra")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1329517859]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.875, 0)
+shape = SubResource("CapsuleShape3D_owum4")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=82862695]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.65, 0)
+
+[node name="RayCast3D" type="RayCast3D" parent="Camera3D" unique_id=1805009108]
+target_position = Vector3(0, 0, -2.5)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=920520659]
+
+[node name="Reticle" type="ColorRect" parent="HUD" unique_id=549069825]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -3.0
+offset_top = -3.0
+offset_right = 3.0
+offset_bottom = 3.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ToolsMenu" type="PanelContainer" parent="HUD" unique_id=1448427701]
+visible = false
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -98.0
+offset_bottom = 101.0
+grow_horizontal = 0
+
+[node name="Modes" type="VBoxContainer" parent="HUD/ToolsMenu" unique_id=1866249146]
+layout_mode = 2
+
+[node name="CreationButton" type="Button" parent="HUD/ToolsMenu/Modes" unique_id=1097662421]
+layout_mode = 2
+text = "Creación"
+
+[node name="EditionButton" type="Button" parent="HUD/ToolsMenu/Modes" unique_id=92603661]
+layout_mode = 2
+text = "Edición"
+
+[node name="DeletionButton" type="Button" parent="HUD/ToolsMenu/Modes" unique_id=1683424747]
+layout_mode = 2
+text = "Eliminación"
+
+[node name="Shapes" type="VBoxContainer" parent="HUD/ToolsMenu" unique_id=915607240]
+visible = false
+layout_mode = 2
+
+[node name="CubeButton" type="Button" parent="HUD/ToolsMenu/Shapes" unique_id=260714406]
+layout_mode = 2
+text = "Cubo"
+
+[node name="Sphere" type="Button" parent="HUD/ToolsMenu/Shapes" unique_id=2025194478]
+layout_mode = 2
+text = "Esfera"
+
+[node name="Plane" type="Button" parent="HUD/ToolsMenu/Shapes" unique_id=1000564955]
+layout_mode = 2
+text = "Plano"
+
+[node name="BackButton" type="Button" parent="HUD/ToolsMenu/Shapes" unique_id=1868130293]
+layout_mode = 2
+text = "Volver"
