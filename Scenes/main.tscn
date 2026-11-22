@@ -1,0 +1,155 @@
+[gd_scene format=3 uid="uid://bdgwijt52ree4"]
+
+[ext_resource type="Script" uid="uid://ilkte1sij0i1" path="res://Scripts/xr_bootstrap.gd" id="1_jjgbg"]
+[ext_resource type="Script" uid="uid://dyn153gs2o8u4" path="res://Scripts/xr_input_visibility.gd" id="2_bo1nx"]
+[ext_resource type="PackedScene" uid="uid://bktercc17qklf" path="res://Scenes/desktop_player.tscn" id="2_hptm8"]
+[ext_resource type="Script" uid="uid://ca7v5mw72ld6h" path="res://Scripts/xr_controller_grabber.gd" id="3_6bp64"]
+[ext_resource type="Script" uid="uid://cxrubit0kreml" path="res://Scripts/xr_session_diagnostics.gd" id="3_8gbba"]
+[ext_resource type="Script" uid="uid://d267yb6mtuf0w" path="res://Scripts/xr_hand_pinch.gd" id="3_jjvhh"]
+[ext_resource type="Script" uid="uid://c7axjrhtl2ryo" path="res://Scripts/xr_pinch_grabber.gd" id="4_21xkr"]
+[ext_resource type="PackedScene" uid="uid://b3trcqf07qw3" path="res://Scenes/right_hand_menu.tscn" id="6_344ge"]
+[ext_resource type="Script" uid="uid://buuyqy18wv724" path="res://Scripts/xr_right_hand_menu.gd" id="7_ynf5e"]
+[ext_resource type="Texture2D" uid="uid://n7xdifosc1km" path="res://Images/floor_tile.png" id="9_d1ilt"]
+[ext_resource type="PackedScene" uid="uid://dh2clb8t3lg4w" path="res://Scenes/physics_cube.tscn" id="11_d1ilt"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jjgbg"]
+albedo_color = Color(1, 0.50980395, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_jjgbg"]
+size = Vector3(0.4, 0.4, 0.12)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bo1nx"]
+albedo_color = Color(0, 0.54509807, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x7gmj"]
+shading_mode = 0
+albedo_color = Color(1, 0.50980395, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_owum4"]
+radius = 0.03
+height = 0.06
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6cx45"]
+shading_mode = 0
+albedo_color = Color(0, 0.47058824, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_jjgbg"]
+radius = 0.03
+height = 0.06
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hptm8"]
+albedo_texture = ExtResource("9_d1ilt")
+uv1_triplanar = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_owum4"]
+size = Vector2(8, 8)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_owum4"]
+size = Vector3(8, 0.2, 8)
+
+[sub_resource type="BoxMesh" id="BoxMesh_6cx45"]
+size = Vector3(0.8, 0.8, 0.6)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_344ge"]
+size = Vector3(0.8, 0.8, 0.6)
+
+[node name="Main" type="Node3D" unique_id=2045035479]
+script = ExtResource("1_jjgbg")
+
+[node name="DesktopPlayer" parent="." unique_id=2080402090 instance=ExtResource("2_hptm8")]
+
+[node name="XROrigin3D" type="XROrigin3D" parent="." unique_id=825873006]
+script = ExtResource("2_bo1nx")
+
+[node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D" unique_id=1870584449]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
+
+[node name="LeftHand" type="XRController3D" parent="XROrigin3D" unique_id=605557091]
+tracker = &"left_hand"
+pose = &"grip"
+show_when_tracked = true
+
+[node name="ControllerVisual" type="MeshInstance3D" parent="XROrigin3D/LeftHand" unique_id=2043899769]
+material_override = SubResource("StandardMaterial3D_jjgbg")
+mesh = SubResource("BoxMesh_jjgbg")
+
+[node name="Grabber" type="Node3D" parent="XROrigin3D/LeftHand" unique_id=1652847069]
+script = ExtResource("3_6bp64")
+
+[node name="RightHand" type="XRController3D" parent="XROrigin3D" unique_id=2025266081]
+tracker = &"right_hand"
+pose = &"grip"
+show_when_tracked = true
+
+[node name="ControllerVisual" type="MeshInstance3D" parent="XROrigin3D/RightHand" unique_id=1990557715]
+material_override = SubResource("StandardMaterial3D_bo1nx")
+mesh = SubResource("BoxMesh_jjgbg")
+
+[node name="Grabber" type="Node3D" parent="XROrigin3D/RightHand" unique_id=879724866]
+script = ExtResource("3_6bp64")
+
+[node name="TrackerLeftHand" type="XRNode3D" parent="XROrigin3D" unique_id=310364744]
+tracker = &"/user/hand_tracker/left"
+show_when_tracked = true
+script = ExtResource("3_jjvhh")
+rest_color = Color(1, 0.50980395, 0, 1)
+
+[node name="HandMarker" type="MeshInstance3D" parent="XROrigin3D/TrackerLeftHand" unique_id=2073280756]
+material_override = SubResource("StandardMaterial3D_x7gmj")
+mesh = SubResource("SphereMesh_owum4")
+
+[node name="Grabber" type="Node3D" parent="XROrigin3D/TrackerLeftHand" unique_id=1485726518]
+script = ExtResource("4_21xkr")
+
+[node name="TrackerRightHand" type="XRNode3D" parent="XROrigin3D" unique_id=288181873]
+tracker = &"/user/hand_tracker/right"
+show_when_tracked = true
+script = ExtResource("3_jjvhh")
+rest_color = Color(0, 0.47058824, 1, 1)
+
+[node name="HandMarker" type="MeshInstance3D" parent="XROrigin3D/TrackerRightHand" unique_id=527112044]
+material_override = SubResource("StandardMaterial3D_6cx45")
+mesh = SubResource("SphereMesh_jjgbg")
+
+[node name="Grabber" type="Node3D" parent="XROrigin3D/TrackerRightHand" unique_id=904277210]
+script = ExtResource("4_21xkr")
+
+[node name="RightHandMenu" parent="XROrigin3D" unique_id=1005704003 node_paths=PackedStringArray("right_controller", "right_hand", "camera") instance=ExtResource("6_344ge")]
+script = ExtResource("7_ynf5e")
+right_controller = NodePath("../RightHand")
+right_hand = NodePath("../TrackerRightHand")
+camera = NodePath("../XRCamera3D")
+
+[node name="FloorBody" type="StaticBody3D" parent="." unique_id=1611010329]
+collision_mask = 3
+
+[node name="Floor" type="MeshInstance3D" parent="FloorBody" unique_id=1633236196]
+material_override = SubResource("StandardMaterial3D_hptm8")
+mesh = SubResource("PlaneMesh_owum4")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FloorBody" unique_id=95454862]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+shape = SubResource("BoxShape3D_owum4")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1593281035]
+transform = Transform3D(0.8660254, 0.43301272, -0.25, 0, 0.49999997, 0.86602545, 0.5, -0.75, 0.4330127, 0, 8.738279, 0)
+shadow_enabled = true
+
+[node name="XRSessionDiagnostics" type="Node" parent="." unique_id=1070447867]
+process_mode = 4
+script = ExtResource("3_8gbba")
+
+[node name="PhysicsCube" parent="." unique_id=750296286 instance=ExtResource("11_d1ilt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -0.7)
+
+[node name="TestStand" type="StaticBody3D" parent="." unique_id=214607290]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, -0.7)
+collision_mask = 3
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="TestStand" unique_id=105037085]
+mesh = SubResource("BoxMesh_6cx45")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TestStand" unique_id=1510967675]
+shape = SubResource("BoxShape3D_344ge")
+
+[editable path="XROrigin3D/RightHandMenu"]
