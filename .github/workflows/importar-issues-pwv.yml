@@ -1,0 +1,192 @@
+name: Importar issues de Project Wide View
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: importar-issues-project-wide-view
+  cancel-in-progress: false
+
+jobs:
+  importar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Importar hitos, etiquetas, issues y dependencias
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const destination = { owner, repo };
+            const { issues, repos } = github.rest;
+            const filename = 'Project_Wide_View_Issues_GitHub.json';
+            const { data: file } = await repos.getContent({ ...destination, ref: context.sha, path: filename }).catch(error => {
+              if (error.status === 404) throw new Error('Falta ' + filename + ' en la raíz de la rama elegida.');
+              throw error;
+            });
+            if (file.type !== 'file' || file.encoding !== 'base64') {
+              throw new Error('Se esperaba el archivo JSON del plan en la raíz del repositorio.');
+            }
+            const plan = JSON.parse(Buffer.from(file.content, 'base64').toString('utf8').replace(/^\uFEFF/, ''));
+            const nonempty = value => typeof value === 'string' && value.trim().length > 0;
+            if (!Array.isArray(plan.issues) || !plan.issues.length || !Array.isArray(plan.milestones)) {
+              throw new Error('El JSON debe contener las listas issues y milestones del plan.');
+            }
+
+            const plannedMilestones = new Set();
+            for (const milestone of plan.milestones) {
+              if (!nonempty(milestone.name) || plannedMilestones.has(milestone.name)) {
+                throw new Error('Hay un hito sin nombre o repetido en el JSON.');
+              }
+              plannedMilestones.add(milestone.name);
+            }
+
+            const plannedIssues = new Map();
+            for (const item of plan.issues) {
+              if (!/^PWV-\d+$/.test(item.id) || plannedIssues.has(item.id)
+                  || !nonempty(item.title) || !nonempty(item.body)
+                  || !plannedMilestones.has(item.milestone)
+                  || !Array.isArray(item.labels) || !item.labels.every(nonempty)
+                  || !Array.isArray(item.depends_on)) {
+                throw new Error('Revisa los campos o el identificador de la ficha ' + item.id);
+              }
+              plannedIssues.set(item.id, item);
+            }
+
+            const ordered = [];
+            const visited = new Set();
+            const visiting = new Set();
+            function visit(key) {
+              if (visited.has(key)) return;
+              const item = plannedIssues.get(key);
+              if (!item || visiting.has(key)) {
+                throw new Error('Dependencia inexistente o circular en ' + key);
+              }
+              visiting.add(key);
+              for (const dependency of item.depends_on) visit(dependency);
+              visiting.delete(key);
+              visited.add(key);
+              ordered.push(item);
+            }
+            for (const key of plannedIssues.keys()) visit(key);
+
+            const { data: repository } = await repos.get(destination);
+            if (!repository.has_issues) throw new Error('Activa Issues en los ajustes del repositorio.');
+            const list = (route, extra = {}) => github.paginate(route, { ...destination, per_page: 100, ...extra });
+            const issuesByKey = new Map();
+            for (const ticket of await list(issues.listForRepo, { state: 'all' })) {
+              if (ticket.pull_request) continue;
+              const marker = (ticket.body || '').match(/<!-- pwv-import:(PWV-\d+) -->/);
+              const prefix = ticket.title.match(/^\[(PWV-\d+)\]/);
+              const key = marker?.[1] || prefix?.[1];
+              if (!plannedIssues.has(key)) continue;
+              if (marker && prefix && marker[1] !== prefix[1]) {
+                throw new Error('El título y la marca del plan no coinciden en #' + ticket.number);
+              }
+              if (issuesByKey.has(key)) {
+                throw new Error(key + ' aparece en #' + issuesByKey.get(key).number + ' y #' + ticket.number);
+              }
+              issuesByKey.set(key, ticket);
+            }
+
+            const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
+            async function write(request) {
+              for (let attempt = 0; ; attempt++) {
+                await wait(1200);
+                try {
+                  return (await request()).data;
+                } catch (error) {
+                  const headers = error.response?.headers || {};
+                  const limited = error.status === 429 || (error.status === 403 &&
+                    (headers['retry-after'] || headers['x-ratelimit-remaining'] === '0' || /rate limit/i.test(error.message)));
+                  if (!limited || attempt >= 3) throw error;
+                  const reset = headers['x-ratelimit-remaining'] === '0' ? Number(headers['x-ratelimit-reset']) || 0 : 0;
+                  const seconds = Math.max(Number(headers['retry-after']) || 0, reset - Math.floor(Date.now() / 1000) + 1,
+                    60 * 2 ** attempt);
+                  core.info('GitHub ha pedido una pausa. Se reintentará en ' + seconds + ' segundos.');
+                  await wait(seconds * 1000);
+                }
+              }
+            }
+
+            const labelRows = await list(issues.listLabelsForRepo);
+            const labels = new Set(labelRows.map(row => row.name.toLowerCase()));
+            const wantedLabels = new Set(ordered.flatMap(item => item.labels));
+            const created = { labels: 0, milestones: 0, issues: 0, links: 0 };
+            const colors = { P0: 'b60205', P1: 'fbca04', P2: 'c5def5' };
+            for (const name of wantedLabels) {
+              if (labels.has(name.toLowerCase())) continue;
+              const color = colors[name] || (name.startsWith('area/') ? '1d76db' : '5319e7');
+              await write(() => issues.createLabel({ ...destination, name, color }));
+              labels.add(name.toLowerCase());
+              created.labels++;
+            }
+
+            const milestones = new Map();
+            for (const row of await list(issues.listMilestones, { state: 'all' })) {
+              milestones.set(row.title, row.number);
+            }
+            for (const item of plan.milestones) {
+              if (milestones.has(item.name)) continue;
+              const description = [item.goal, item.exit_criteria].filter(nonempty).join('\n\n');
+              const row = await write(() => issues.createMilestone({ ...destination, title: item.name, description }));
+              milestones.set(item.name, row.number);
+              created.milestones++;
+            }
+
+            for (const item of ordered) {
+              const milestone = milestones.get(item.milestone);
+              const existing = issuesByKey.get(item.id);
+              if (existing) {
+                const applied = new Set(existing.labels.map(label => (typeof label === 'string' ? label : label.name).toLowerCase()));
+                const missing = item.labels.filter(label => !applied.has(label.toLowerCase()));
+                const target = { ...destination, issue_number: existing.number };
+                if (missing.length) await write(() => issues.addLabels({ ...target, labels: missing }));
+                if (!existing.milestone) await write(() => issues.update({ ...target, milestone }));
+                if (existing.milestone && existing.milestone.number !== milestone) {
+                  core.warning('#' + existing.number + ' conserva el hito que ya tenía.');
+                }
+                continue;
+              }
+
+              const linkedBody = item.body.replace(/(## Dependencias\n\n)([^\n]+)/, (whole, heading) => {
+                if (!item.depends_on.length) return whole;
+                const links = item.depends_on.map(key => key + ' (#' + issuesByKey.get(key).number + ')');
+                return heading + links.join(', ');
+              });
+              const row = await write(() => issues.create({
+                ...destination, title: item.title, labels: item.labels, milestone,
+                body: linkedBody + '\n\n<!-- pwv-import:' + item.id + ' -->'
+              }));
+              issuesByKey.set(item.id, row);
+              created.issues++;
+              core.info(item.id + ' → #' + row.number);
+            }
+
+            let totalLinks = 0;
+            for (const item of ordered) {
+              const dependencies = new Set(item.depends_on);
+              if (!dependencies.size) continue;
+              const issue_number = issuesByKey.get(item.id).number;
+              const route = '/repos/{owner}/{repo}/issues/{issue_number}/dependencies/blocked_by';
+              const rows = await list('GET ' + route, { issue_number });
+              const linked = new Set(rows.map(row => row.id));
+              for (const key of dependencies) {
+                totalLinks++;
+                const issue_id = issuesByKey.get(key).id;
+                if (linked.has(issue_id)) continue;
+                await write(() => github.request('POST ' + route, { ...destination, issue_number, issue_id }));
+                created.links++;
+              }
+            }
+
+            await core.summary.addHeading('Importación de Project Wide View').addTable([
+              [{ data: 'Elemento', header: true }, { data: 'En el plan', header: true }, { data: 'Creado en esta ejecución', header: true }],
+              ['Issues', String(ordered.length), String(created.issues)],
+              ['Hitos', String(plannedMilestones.size), String(created.milestones)],
+              ['Etiquetas', String(wantedLabels.size), String(created.labels)],
+              ['Dependencias', String(totalLinks), String(created.links)]
+            ]).write();
