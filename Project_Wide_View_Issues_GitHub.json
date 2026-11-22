@@ -1,0 +1,1038 @@
+{
+  "project": "Project Wide View",
+  "date": "2026-11-22",
+  "milestones": [
+    {
+      "name": "H0 · Base reproducible en PC",
+      "goal": "Poder abrir una única escena jugable tanto con teclado y ratón como con el visor conectado.",
+      "exit_criteria": "Los dos modos arrancan con un solo jugador activo. Hay un registro repetible del agarre y del giro existentes."
+    },
+    {
+      "name": "H1 · Taller individual",
+      "goal": "Recorrer el lobby y usar el taller para construir y ensayar la primera pelota.",
+      "exit_criteria": "Un jugador crea una pelota, cambia color y rebote y compara dos caídas desde la misma altura en cada modo."
+    },
+    {
+      "name": "H2 · Pelota cooperativa",
+      "goal": "Hacer que dos participantes puedan construir y probar el mismo objeto en una instancia.",
+      "exit_criteria": "Dos clientes independientes ven una sola pelota, coinciden sobre quién la sujeta, se la devuelven y observan la edición autorizada del rebote."
+    },
+    {
+      "name": "H3 · Programación por bloques",
+      "goal": "Crear comportamientos dentro del juego con controles adecuados para escritorio y PC VR.",
+      "exit_criteria": "En PWV-021 un jugador programa la pelota y el otro ejecuta el comportamiento. Después se añaden activación, tiempo y variables."
+    },
+    {
+      "name": "H4 · Prefabricados y autoría",
+      "goal": "Guardar, intercambiar y modificar creaciones conservando sus permisos y procedencia.",
+      "exit_criteria": "Dos usuarios obtienen una segunda pelota con distinto rebote y explican quién creó la copia, el antecedente inmediato y el original."
+    },
+    {
+      "name": "H5 · Interfaz, mundos y lobby social",
+      "goal": "Dar al grupo herramientas para reunirse, viajar y organizar proyectos.",
+      "exit_criteria": "Desde el inicio se llega a amigos, ajustes y mundos. Los accesos privados se respetan al viajar por tablet o portal y las herramientas del lobby se comparten."
+    },
+    {
+      "name": "H6 · Taller avanzado y validación integrada",
+      "goal": "Ampliar las posibilidades de construcción y ensayo una vez validado el recorrido principal.",
+      "exit_criteria": "El banco admite montajes y el grupo tiene una compilación integrada de prueba. Los engranajes, el exterior, el viento y el reto de altura tienen entregas independientes."
+    }
+  ],
+  "priorities": {
+    "P0": "Primera prueba de concepto de creación, física compartida y programación en escritorio y PC VR.",
+    "P1": "Funciones y validaciones posteriores recogidas en el diseño.",
+    "P2": "Ampliaciones y ejercicios avanzados."
+  },
+  "source_references": {
+    "DEF": "Documento de definición · visión, plataforma, primera experiencia e intercambio",
+    "EDI": "Biblioteca de diseño · Modo Creación e inspector",
+    "INI": "Biblioteca de diseño · Pantalla de inicio",
+    "MAP": "Biblioteca de diseño · Mapa de inicio",
+    "TUT": "Biblioteca de diseño · Tutorial del taller",
+    "TAB": "Biblioteca de diseño · Tablet del menú y viaje entre mundos",
+    "ATR": "Biblioteca de diseño · Atracción de objetos en VR y boceto de trayectoria",
+    "ZIP": "Prototipo de escritorio · escena y scripts archivados",
+    "SES": "Sesiones de desarrollo · confirmaciones y acuerdos del proyecto",
+    "VIS": "Vista panorámica del taller tutorial",
+    "MOV": "Bocetos de movimiento XR · cruceta y teletransporte",
+    "BOC": "Boceto del panel de Creación · forma y tamaño",
+    "BLQ": "Referencias del editor de bloques · pelota, balizas, mando, antena y caja de ritmo",
+    "PAL": "Comparativa de diez paletas · variantes 02 y 09",
+    "FORK": "Boceto de la ficha de un prefabricado derivado",
+    "ENG": "Ejemplo visual de construcción y programación de engranajes"
+  },
+  "issues": [
+    {
+      "id": "PWV-001",
+      "title": "[PWV-001] Verificar el prototipo actual en Godot 4.7",
+      "body": "## Objetivo\n\nIdentificar la revisión del proyecto con la que se harán las pruebas y reproducir su escena principal en el PC de referencia.\n\n## Criterios de aceptación\n\n- [ ] Anotar revisión o copia fechada, escena de arranque, versión del motor, renderer, físicas y configuración OpenXR utilizada.\n- [ ] Localizar el proyecto de Godot, la escena principal, el rig XR, el jugador de escritorio y la implementación de `XRGrabbable` o su equivalente actual. Relacionar las diferencias con el ZIP de escritorio.\n- [ ] Registrar un arranque en escritorio y otro con Quest 2 conectado al PC. Adjuntar los pasos y clasificar cada resultado como reproducido, pendiente o fallo con pasos para repetirlo.\n\n## Dependencias\n\nNinguna\n\n## Referencia de proyecto\n\nPrototipo de escritorio · escena y scripts archivados · Sesiones de desarrollo · confirmaciones y acuerdos del proyecto",
+      "labels": [
+        "P0",
+        "tipo/verificacion",
+        "area/base"
+      ],
+      "milestone": "H0 · Base reproducible en PC",
+      "priority": "P0",
+      "depends_on": [],
+      "source_refs": [
+        "ZIP",
+        "SES"
+      ]
+    },
+    {
+      "id": "PWV-002",
+      "title": "[PWV-002] Validar la selección automática entre escritorio y PC VR",
+      "body": "## Objetivo\n\nUsar el arranque existente para elegir el jugador correcto al abrir la misma aplicación.\n\n## Criterios de aceptación\n\n- [ ] Con OpenXR operativo y el visor disponible, la escena usa la cámara y las entradas XR.\n- [ ] Con el visor desconectado o con OpenXR sin inicializar, la misma escena abre en escritorio y admite teclado y ratón.\n- [ ] En ambos arranques hay una sola cámara de jugador activa y un solo cuerpo que responde a las entradas. Adjuntar el resultado de las dos ejecuciones.\n\n## Dependencias\n\n`PWV-001`\n\n## Referencia de proyecto\n\nBiblioteca de diseño · Pantalla de inicio · Prototipo de escritorio · escena y scripts archivados · Sesiones de desarrollo · confirmaciones y acuerdos del proyecto",
+      "labels": [
+        "P0",
+        "tipo/integracion",
+        "area/base"
+      ],
+      "milestone": "H0 · Base reproducible en PC",
+      "priority": "P0",
+      "depends_on": [
+        "PWV-001"
+      ],
+      "source_refs": [
+        "INI",
+        "ZIP",
+        "SES"
+      ]
+    },
+    {
+      "id": "PWV-003",
+      "title": "[PWV-003] Verificar agarres y giro manual en los dos modos",
+      "body": "## Objetivo\n\nConservar el comportamiento que ya se ha probado y localizar diferencias entre el proyecto de trabajo y la referencia archivada.\n\n## Criterios de aceptación\n\n- [ ] En escritorio, andar con WASD, mirar con el ratón y coger y soltar un objeto alcanzable. Una pared interpuesta impide cogerlo y al liberar el cursor o perder foco se libera el objeto.\n- [ ] Con el objeto sujeto, la rueda lo gira sobre el eje vertical y Mayús + rueda sobre el horizontal. Anotar el control real de agarre y el comportamiento al soltar.\n- [ ] En Quest 2, recoger y soltar la misma clase de pieza con ambos mandos y con la pinza de cada mano. Registrar por separado el resultado de mandos y seguimiento de manos.\n\n## Dependencias\n\n`PWV-001`\n\n## Referencia de proyecto\n\nPrototipo de escritorio · escena y scripts archivados · Sesiones de desarrollo · confirmaciones y acuerdos del proyecto",
+      "labels": [
+        "P0",
+        "tipo/verificacion",
+        "area/interaccion"
+      ],
+      "milestone": "H0 · Base reproducible en PC",
+      "priority": "P0",
+      "depends_on": [
+        "PWV-001"
+      ],
+      "source_refs": [
+        "ZIP",
+        "SES"
+      ]
+    },
+    {
+      "id": "PWV-004",
+      "title": "[PWV-004] Construir el recorrido del lobby al banco y la zona de caídas",
+      "body": "## Objetivo\n\nDisponer de un escenario de geometría simple para observar al jugador desde que aparece hasta que compara dos caídas.\n\n## Criterios de aceptación\n\n- [ ] El punto de aparición está en el lobby. Una puerta lleva al taller y un panel identificable en la entrada permite iniciar el tutorial cuando el jugador quiera.\n- [ ] El taller tiene banco, una superficie horizontal y una referencia de altura repetible. Hay espacio para colocar una pieza y para que dos jugadores se la pasen.\n- [ ] Recorrer el trayecto desde la aparición y volver al banco. El mismo taller queda disponible para la exploración libre al salir del ejercicio.\n\n## Dependencias\n\n`PWV-001`\n\n## Referencia de proyecto\n\nBiblioteca de diseño · Mapa de inicio · Biblioteca de diseño · Tutorial del taller · Vista panorámica del taller tutorial",
+      "labels": [
+        "P0",
+        "tipo/funcion",
+        "area/taller"
+      ],
+      "milestone": "H1 · Taller individual",
+      "priority": "P0",
+      "depends_on": [
+        "PWV-001"
+      ],
+      "source_refs": [
+        "MAP",
+        "TUT",
+        "VIS"
+      ]
+    },
+    {
+      "id": "PWV-005",
+      "title": "[PWV-005] Recorrer el taller en VR con cruceta o teletransporte",
+      "body": "## Objetivo\n\nHacer viable el mismo recorrido desde el visor con las dos opciones del boceto de locomoción.\n\n## Criterios de aceptación\n\n- [ ] El jugador puede elegir movimiento por cruceta o teletransporte y llegar con cualquiera de los dos al panel y al banco.\n- [ ] En teletransporte, un indicador superior muestra el modo, el rayo señala un destino y un halo marca el punto válido en el suelo. El botón de interactuar confirma el viaje.\n- [ ] Apuntar a una pared o a un punto sin espacio mantiene al jugador en el origen. En modo cruceta, el desplazamiento funciona sin el halo de destino.\n\n## Dependencias\n\n`PWV-002`, `PWV-004`\n\n## Referencia de proyecto\n\nBocetos de movimiento XR · cruceta y teletransporte · Biblioteca de diseño · Mapa de inicio",
+      "labels": [
+        "P0",
+        "tipo/funcion",
+        "area/xr"
+      ],
+      "milestone": "H1 · Taller individual",
+      "priority": "P0",
+      "depends_on": [
+        "PWV-002",
+        "PWV-004"
+      ],
+      "source_refs": [
+        "MOV",
+        "MAP"
+      ]
+    },
+    {
+      "id": "PWV-006",
+      "title": "[PWV-006] Conectar el menú de herramientas con los tres modos y la selección",
+      "body": "## Objetivo\n\nHacer que escritorio y PC VR seleccionen Creación, Edición o Eliminación sobre el mismo objeto de la escena.\n\n## Criterios de aceptación\n\n- [ ] En PC VR, B abre el menú de la mano derecha y se puede confirmar un modo con el mando. En escritorio existe una acción accesible con teclado o ratón que abre el mismo menú.\n- [ ] Creación abre el catálogo y el inspector flotante. Edición y Eliminación identifican el modo activo y la pieza a la que se aplicará la acción.\n- [ ] Alternar entre dos objetos actualiza la selección y el inspector. Un objeto de escenario con propiedades de solo lectura se puede inspeccionar sin habilitar su edición.\n\n## Dependencias\n\n`PWV-002`\n\n## Referencia de proyecto\n\nDocumento de definición · visión, plataforma, primera experiencia e intercambio · Biblioteca de diseño · Modo Creación e inspector · Sesiones de desarrollo · confirmaciones y acuerdos del proyecto",
+      "labels": [
+        "P0",
+        "tipo/integracion",
+        "area/creacion"
+      ],
+      "milestone": "H1 · Taller individual",
+      "priority": "P0",
+      "depends_on": [
+        "PWV-002"
+      ],
+      "source_refs": [
+        "DEF",
+        "EDI",
+        "SES"
+      ]
+    },
+    {
+      "id": "PWV-007",
+      "title": "[PWV-007] Colocar un cubo, un plano y una esfera desde el catálogo",
+      "body": "## Objetivo\n\nConvertir una forma elegida en una pieza física mediante una vista previa que se pueda ajustar, confirmar o cancelar.\n\n## Criterios de aceptación\n\n- [ ] Las tres formas generan una vista previa reconocible. Se puede cambiar el tamaño antes de colocarla y las dimensiones visibles corresponden a la geometría.\n- [ ] Confirmar crea exactamente una pieza en la posición y con el tamaño mostrados, con una colisión adecuada a la forma. Cancelar devuelve al catálogo y conserva el número de piezas.\n- [ ] Colocar un cubo y una esfera de distinto tamaño en escritorio y en PC VR. Como decisión propuesta, la pieza recién colocada queda seleccionada.\n\n## Dependencias\n\n`PWV-006`\n\n## Referencia de proyecto\n\nDocumento de definición · visión, plataforma, primera experiencia e intercambio · Biblioteca de diseño · Modo Creación e inspector · Boceto del panel de Creación · forma y tamaño",
+      "labels": [
+        "P0",
+        "tipo/funcion",
+        "area/creacion"
+      ],
+      "milestone": "H1 · Taller individual",
+      "priority": "P0",
+      "depends_on": [
+        "PWV-006"
+      ],
+      "source_refs": [
+        "DEF",
+        "EDI",
+        "BOC"
+      ]
+    },
+    {
+      "id": "PWV-008",
+      "title": "[PWV-008] Girar, encajar y desplazar la vista previa con precisión",
+      "body": "## Objetivo\n\nCompletar los cuatro controles de colocación previstos en el diseño.\n\n## Criterios de aceptación\n\n- [ ] La vista previa permite girar, activar el encaje en cuadrícula y trasladar la pieza restringiendo el movimiento a X, Y o Z.\n- [ ] Al activar la alineación, la orientación de la pieza sigue la superficie apuntada. Probar suelo, pared y una superficie inclinada.\n- [ ] En escritorio y PC VR, confirmar reproduce la transformación de la vista previa. Cancelar después de usar cualquiera de las herramientas descarta esa colocación.\n\n## Dependencias\n\n`PWV-007`\n\n## Referencia de proyecto\n\nBiblioteca de diseño · Modo Creación e inspector",
+      "labels": [
+        "P1",
+        "tipo/funcion",
+        "area/creacion"
+      ],
+      "milestone": "H1 · Taller individual",
+      "priority": "P1",
+      "depends_on": [
+        "PWV-007"
+      ],
+      "source_refs": [
+        "EDI"
+      ]
+    },
+    {
+      "id": "PWV-009",
+      "title": "[PWV-009] Editar las propiedades de la pieza seleccionada en el inspector",
+      "body": "## Objetivo\n\nExponer las propiedades que corresponden al objeto y al modo mediante las vistas básica y avanzada del inspector.\n\n## Criterios de aceptación\n\n- [ ] La vista básica muestra nombre, posición, rotación y propiedades físicas aplicables, como masa y rebote. La vista avanzada muestra propiedades adicionales de la pieza seleccionada.\n- [ ] El tamaño se ajusta durante la vista previa de Creación. En Edición se puede cambiar el color y ajustar el rebote. Pasar a otra pieza carga los valores de esa pieza.\n- [ ] Con dos esferas distintas, cambiar el color de una y el rebote de la otra. Tanto la apariencia como la siguiente caída reflejan la edición correspondiente en escritorio y PC VR.\n\n## Dependencias\n\n`PWV-007`\n\n## Referencia de proyecto\n\nBiblioteca de diseño · Modo Creación e inspector · Documento de definición · visión, plataforma, primera experiencia e intercambio",
+      "labels": [
+        "P0",
+        "tipo/funcion",
+        "area/creacion"
+      ],
+      "milestone": "H1 · Taller individual",
+      "priority": "P0",
+      "depends_on": [
+        "PWV-007"
+      ],
+      "source_refs": [
+        "EDI",
+        "DEF"
+      ]
+    },
+    {
+      "id": "PWV-010",
+      "title": "[PWV-010] Soltar y lanzar la misma pelota desde escritorio y PC VR",
+      "body": "## Objetivo\n\nDistinguir una caída desde el reposo de un pase intencionado. Comprobar primero qué parte ya ofrece el agarre actual.\n\n## Criterios de aceptación\n\n- [ ] En escritorio y en PC VR, soltar una esfera quieta junto a una referencia vertical produce una caída desde esa altura.\n- [ ] Existe una acción reproducible para lanzarla hacia un compañero en escritorio y un gesto equivalente en PC VR. La pelota queda libre al salir de la mano.\n- [ ] Anotar en la ficha de la prueba los controles de cada modo. Repetir una caída y un lanzamiento, recoger la misma esfera y verificar que conserva sus propiedades.\n\n## Dependencias\n\n`PWV-003`, `PWV-007`\n\n## Referencia de proyecto\n\nDocumento de definición · visión, plataforma, primera experiencia e intercambio · Biblioteca de diseño · Tutorial del taller · Prototipo de escritorio · escena y scripts archivados",
+      "labels": [
+        "P0",
+        "tipo/integracion",
+        "area/fisica"
+      ],
+      "milestone": "H1 · Taller individual",
+      "priority": "P0",
+      "depends_on": [
+        "PWV-003",
+        "PWV-007"
+      ],
+      "source_refs": [
+        "DEF",
+        "TUT",
+        "ZIP"
+      ]
+    },
+    {
+      "id": "PWV-011",
+      "title": "[PWV-011] Guiar el tutorial individual y comparar dos rebotes",
+      "body": "## Objetivo\n\nPermitir que una persona aprenda por sí sola a crear la pelota, darle color y entender el efecto del rebote.\n\n## Criterios de aceptación\n\n- [ ] Desde el panel, crear una esfera, elegir su color en Edición y soltarla desde la marca. Aumentar el rebote de esa misma pelota y repetir desde la misma altura sobre el mismo suelo. El segundo pico es mayor y se puede comparar con la referencia.\n- [ ] El panel habilita «Confirmar» cuando detecta la acción del paso en curso. «Saltar» permite avanzar por separado y una acción ajena al paso mantiene su estado.\n- [ ] Abandonar el ejercicio a medias y volver al panel lo inicia desde el primer paso. Completar el recorrido en escritorio y PC VR e indicar dónde se reconocieron las dos alturas.\n\n## Dependencias\n\n`PWV-004`, `PWV-005`, `PWV-009`, `PWV-010`\n\n## Referencia de proyecto\n\nBiblioteca de diseño · Tutorial del taller · Documento de definición · visión, plataforma, primera experiencia e intercambio · Biblioteca de diseño · Mapa de inicio",
+      "labels": [
+        "P0",
+        "tipo/funcion",
+        "area/tutorial"
+      ],
+      "milestone": "H1 · Taller individual",
+      "priority": "P0",
+      "depends_on": [
+        "PWV-004",
+        "PWV-005",
+        "PWV-009",
+        "PWV-010"
+      ],
+      "source_refs": [
+        "TUT",
+        "DEF",
+        "MAP"
+      ]
+    },
+    {
+      "id": "PWV-012",
+      "title": "[PWV-012] Conectar dos jugadores a una instancia de prueba",
+      "body": "## Objetivo\n\nDar a dos clientes una sesión y una escena comunes para probar la cooperación desde el principio.\n\n## Criterios de aceptación\n\n- [ ] Un cliente abre la instancia de prueba y otro entra. Ambos se ven en el taller con identidades de sesión distintas.\n- [ ] Un cliente puede salir y volver a entrar. El participante anterior deja de figurar y se conserva el estado de quien permanece.\n- [ ] Probar primero dos clientes de escritorio y después escritorio con PC VR. Documentar cómo repetir la conexión con la solución de red elegida.\n\n## Dependencias\n\n`PWV-002`, `PWV-004`\n\n## Referencia de proyecto\n\nDocumento de definición · visión, plataforma, primera experiencia e intercambio · Biblioteca de diseño · Tutorial del taller",
+      "labels": [
+        "P0",
+        "tipo/funcion",
+        "area/red"
+      ],
+      "milestone": "H2 · Pelota cooperativa",
+      "priority": "P0",
+      "depends_on": [
+        "PWV-002",
+        "PWV-004"
+      ],
+      "source_refs": [
+        "DEF",
+        "TUT"
+      ]
+    },
+    {
+      "id": "PWV-013",
+      "title": "[PWV-013] Sincronizar la creación y las propiedades de una pieza con permisos",
+      "body": "## Objetivo\n\nHacer que cada pieza compartida tenga una identidad reconocible y un único estado al que lleguen los participantes.\n\n## Criterios de aceptación\n\n- [ ] Crear una esfera en A produce una sola esfera con el mismo identificador, posición inicial, tamaño y color en A y B. Un participante que entra más tarde recibe el estado vigente.\n- [ ] Un jugador con permiso cambia color o rebote. Ambos observan el valor aplicado y el resultado físico. Una edición sin permiso conserva el último valor autorizado en los dos clientes.\n- [ ] Crear también un cubo y seleccionar objetos distintos en cada cliente. La selección de cada persona sigue siendo local y solo la pieza editada cambia.\n\n## Dependencias\n\n`PWV-009`, `PWV-012`\n\n## Referencia de proyecto\n\nDocumento de definición · visión, plataforma, primera experiencia e intercambio · Biblioteca de diseño · Modo Creación e inspector",
+      "labels": [
+        "P0",
+        "tipo/funcion",
+        "area/red"
+      ],
+      "milestone": "H2 · Pelota cooperativa",
+      "priority": "P0",
+      "depends_on": [
+        "PWV-009",
+        "PWV-012"
+      ],
+      "source_refs": [
+        "DEF",
+        "EDI"
+      ]
+    },
+    {
+      "id": "PWV-014",
+      "title": "[PWV-014] Eliminar una pieza compartida y liberar las selecciones afectadas",
+      "body": "## Objetivo\n\nCompletar el modo Eliminación para una pieza que el jugador pueda retirar de la instancia.\n\n## Criterios de aceptación\n\n- [ ] Elegir Eliminación distingue visualmente la pieza objetivo y permite abandonar la operación antes de ejecutarla.\n- [ ] Cuando un jugador autorizado elimina la pieza, los dos clientes retiran su geometría y colisión. La selección y el inspector de quien estaba consultándola pasan a un estado válido.\n- [ ] Con dos piezas, intentar retirar una sin permiso conserva el conjunto. Eliminarla con permiso permite seguir seleccionando y agarrando la otra.\n\n## Dependencias\n\n`PWV-007`, `PWV-013`\n\n## Referencia de proyecto\n\nDocumento de definición · visión, plataforma, primera experiencia e intercambio · Biblioteca de diseño · Modo Creación e inspector",
+      "labels": [
+        "P1",
+        "tipo/funcion",
+        "area/creacion"
+      ],
+      "milestone": "H2 · Pelota cooperativa",
+      "priority": "P1",
+      "depends_on": [
+        "PWV-007",
+        "PWV-013"
+      ],
+      "source_refs": [
+        "DEF",
+        "EDI"
+      ]
+    },
+    {
+      "id": "PWV-015",
+      "title": "[PWV-015] Transferir la posesión de una pelota al cogerla, lanzarla y soltarla",
+      "body": "## Objetivo\n\nResolver quién sujeta cada pieza mientras cambia de jugador o vuelve a la simulación física.\n\n## Criterios de aceptación\n\n- [ ] A lanza la pelota a B y B la devuelve. En cada transición los dos clientes ven la misma pelota y coinciden sobre quién la sujeta.\n- [ ] Si ambos intentan agarrarla a la vez, la instancia reconoce un único agarre. El otro jugador ve el resultado y puede recogerla después de la liberación.\n- [ ] Si quien la sostiene se desconecta, el objeto vuelve a un estado recuperable. Registrar los resultados intercambiando quién abre la instancia.\n\n## Dependencias\n\n`PWV-010`, `PWV-013`\n\n## Referencia de proyecto\n\nDocumento de definición · visión, plataforma, primera experiencia e intercambio · Biblioteca de diseño · Tutorial del taller",
+      "labels": [
+        "P0",
+        "tipo/funcion",
+        "area/red"
+      ],
+      "milestone": "H2 · Pelota cooperativa",
+      "priority": "P0",
+      "depends_on": [
+        "PWV-010",
+        "PWV-013"
+      ],
+      "source_refs": [
+        "DEF",
+        "TUT"
+      ]
+    },
+    {
+      "id": "PWV-016",
+      "title": "[PWV-016] Completar el tutorial cooperativo mediante una invitación en el taller",
+      "body": "## Objetivo\n\nEnseñar el pase de ida y vuelta a dos personas que coinciden en el mismo taller.\n\n## Criterios de aceptación\n\n- [ ] Una persona invita a la otra desde el panel. El destinatario recibe la invitación en su propia interfaz desde cualquier punto del taller y puede aceptar o declinar.\n- [ ] Tras aceptar, A crea una pelota, B la recoge y se la devuelve a A. El tutorial reconoce el regreso de esa misma pelota como final del ejercicio.\n- [ ] Declinar o abandonar deja el panel disponible para otra invitación. Registrar una vuelta completa intercambiando los papeles de escritorio y PC VR.\n\n## Dependencias\n\n`PWV-011`, `PWV-015`\n\n## Referencia de proyecto\n\nBiblioteca de diseño · Tutorial del taller · Documento de definición · visión, plataforma, primera experiencia e intercambio",
+      "labels": [
+        "P0",
+        "tipo/funcion",
+        "area/tutorial"
+      ],
+      "milestone": "H2 · Pelota cooperativa",
+      "priority": "P0",
+      "depends_on": [
+        "PWV-011",
+        "PWV-015"
+      ],
+      "source_refs": [
+        "TUT",
+        "DEF"
+      ]
+    },
+    {
+      "id": "PWV-017",
+      "title": "[PWV-017] Validar la pelota compartida con dos clientes independientes",
+      "body": "## Objetivo\n\nCerrar la prueba física con evidencia reproducible antes de ampliar el mapa o las funciones sociales.\n\n## Criterios de aceptación\n\n- [ ] Desde una compilación identificada, ejecutar escritorio + escritorio y escritorio + Quest 2. En cada combinación crear, editar con permiso, pasar y devolver la misma pelota.\n- [ ] Registrar identidad de la pelota, quién la sujeta tras cada pase y rebote observado desde una altura común. Repetir una recogida simultánea y una salida del jugador que la sostiene.\n- [ ] Guardar resultado y pasos de cualquier fallo por combinación. Registrar la cobertura de VR + VR cuando haya dos equipos, indicando si esa combinación quedó pendiente.\n\n## Dependencias\n\n`PWV-016`\n\n## Referencia de proyecto\n\nDocumento de definición · visión, plataforma, primera experiencia e intercambio · Biblioteca de diseño · Tutorial del taller",
+      "labels": [
+        "P0",
+        "tipo/verificacion",
+        "area/red"
+      ],
+      "milestone": "H2 · Pelota cooperativa",
+      "priority": "P0",
+      "depends_on": [
+        "PWV-016"
+      ],
+      "source_refs": [
+        "DEF",
+        "TUT"
+      ]
+    },
+    {
+      "id": "PWV-018",
+      "title": "[PWV-018] Definir cómo se añade, conecta y modifica un bloque en los dos modos",
+      "body": "## Objetivo\n\nConvertir los tres inicios acordados en una interacción de editor que se pueda probar con un ejemplo pequeño.\n\n## Criterios de aceptación\n\n- [ ] Especificar «Al agarrarlo», «Al activarlo» con disparador y condiciones hijas, y «Mientras se ejecuta el juego» con tiempo transcurrido. Dibujar dónde se conectan acciones y valores.\n- [ ] Recorrer, sobre un prototipo de baja fidelidad, una propuesta para añadir, reordenar, parametrizar y quitar una acción con ratón y con mando. Anotar el gesto elegido y cómo se corrige una conexión incompatible.\n- [ ] Aprobar como primer ejemplo ejecutable que la propia pelota cambie de color al agarrarla. Las decisiones de interfaz y los resultados de la prueba quedan en la issue.\n\n## Dependencias\n\nNinguna\n\n## Referencia de proyecto\n\nDocumento de definición · visión, plataforma, primera experiencia e intercambio · Referencias del editor de bloques · pelota, balizas, mando, antena y caja de ritmo · Sesiones de desarrollo · confirmaciones y acuerdos del proyecto",
+      "labels": [
+        "P0",
+        "tipo/diseno",
+        "area/bloques"
+      ],
+      "milestone": "H3 · Programación por bloques",
+      "priority": "P0",
+      "depends_on": [],
+      "source_refs": [
+        "DEF",
+        "BLQ",
+        "SES"
+      ]
+    },
+    {
+      "id": "PWV-019",
+      "title": "[PWV-019] Ejecutar el programa «Al agarrarlo, cambiar color» en una pieza",
+      "body": "## Objetivo\n\nHacer que un programa asignado a un objeto responda a su agarre real mediante la misma propiedad de color que usa el inspector.\n\n## Criterios de aceptación\n\n- [ ] Asignar un evento de agarre y una acción de cambio de color a una pelota. Cada nuevo agarre produce una sola ejecución y el inspector muestra el resultado.\n- [ ] Agarrar una segunda pieza sin el programa conserva su color. Al editar el valor del programa, el siguiente agarre aplica el nuevo color.\n- [ ] Repetir con el agarre de escritorio y con el de PC VR. Un valor incompatible o una propiedad no admitida produce un mensaje comprensible y la pieza sigue siendo manipulable.\n\n## Dependencias\n\n`PWV-003`, `PWV-009`, `PWV-018`\n\n## Referencia de proyecto\n\nReferencias del editor de bloques · pelota, balizas, mando, antena y caja de ritmo · Documento de definición · visión, plataforma, primera experiencia e intercambio · Biblioteca de diseño · Modo Creación e inspector",
+      "labels": [
+        "P0",
+        "tipo/funcion",
+        "area/bloques"
+      ],
+      "milestone": "H3 · Programación por bloques",
+      "priority": "P0",
+      "depends_on": [
+        "PWV-003",
+        "PWV-009",
+        "PWV-018"
+      ],
+      "source_refs": [
+        "BLQ",
+        "DEF",
+        "EDI"
+      ]
+    },
+    {
+      "id": "PWV-020",
+      "title": "[PWV-020] Crear y corregir el mismo programa desde ratón y desde el visor",
+      "body": "## Objetivo\n\nDar a quien empieza un editor cómodo y ayuda consultable dentro del juego mientras programa.\n\n## Criterios de aceptación\n\n- [ ] En escritorio, crear el ejemplo de agarre desde una pieza vacía, cambiar el color elegido y quitar o reordenar la acción con el ratón. Repetir el recorrido desde PC VR.\n- [ ] Las vistas sencilla y avanzada representan el mismo programa. Cambiar de vista conserva el objeto, la propiedad, el valor y el orden de las acciones.\n- [ ] Desde cada modo se puede consultar una explicación corta del bloque manteniendo visible el programa y volver a editarlo. Probarlo con la pelota en la propia instancia.\n\n## Dependencias\n\n`PWV-006`, `PWV-019`\n\n## Referencia de proyecto\n\nDocumento de definición · visión, plataforma, primera experiencia e intercambio · Referencias del editor de bloques · pelota, balizas, mando, antena y caja de ritmo",
+      "labels": [
+        "P0",
+        "tipo/funcion",
+        "area/bloques"
+      ],
+      "milestone": "H3 · Programación por bloques",
+      "priority": "P0",
+      "depends_on": [
+        "PWV-006",
+        "PWV-019"
+      ],
+      "source_refs": [
+        "DEF",
+        "BLQ"
+      ]
+    },
+    {
+      "id": "PWV-021",
+      "title": "[PWV-021] Verificar que un programa creado en un modo funciona en ambos clientes",
+      "body": "## Objetivo\n\nCompletar la prueba del producto con una pieza que los propios jugadores programan y prueban juntos.\n\n## Criterios de aceptación\n\n- [ ] Un jugador crea el programa de cambio de color en escritorio. El otro agarra la pelota en PC VR y ambos ven un solo cambio sobre la misma pieza.\n- [ ] Intercambiar los papeles, cambiar el valor desde PC VR con permiso y ejecutar el nuevo programa desde escritorio. Un participante que entra después ve el resultado vigente.\n- [ ] Registrar la compilación, las instrucciones dadas y cualquier punto en que los participantes necesitaron ayuda para programar, consultar la ayuda o comprobar el resultado.\n\n## Dependencias\n\n`PWV-015`, `PWV-020`\n\n## Referencia de proyecto\n\nDocumento de definición · visión, plataforma, primera experiencia e intercambio · Referencias del editor de bloques · pelota, balizas, mando, antena y caja de ritmo",
+      "labels": [
+        "P0",
+        "tipo/verificacion",
+        "area/bloques"
+      ],
+      "milestone": "H3 · Programación por bloques",
+      "priority": "P0",
+      "depends_on": [
+        "PWV-015",
+        "PWV-020"
+      ],
+      "source_refs": [
+        "DEF",
+        "BLQ"
+      ]
+    },
+    {
+      "id": "PWV-022",
+      "title": "[PWV-022] Activar programas al usar un objeto o entrar en su radio",
+      "body": "## Objetivo\n\nDesarrollar «Al activarlo» con un disparador seleccionable y condiciones que el jugador pueda leer como parte del evento.\n\n## Criterios de aceptación\n\n- [ ] Configurar una lámpara de mano que se encienda al pulsar «Usar» mientras el jugador la sostiene. Probar la condición cumplida y sin cumplir sobre esa misma pieza.\n- [ ] Configurar una baliza con un radio visible o consultable. La entrada dispara la acción una vez, permanecer dentro mantiene su estado y salir y volver a entrar la vuelve a disparar.\n- [ ] En una sesión compartida, ambos observan el mismo resultado. La interfaz permite identificar qué disparador y qué condiciones se usaron.\n\n## Dependencias\n\n`PWV-020`, `PWV-021`\n\n## Referencia de proyecto\n\nReferencias del editor de bloques · pelota, balizas, mando, antena y caja de ritmo · Sesiones de desarrollo · confirmaciones y acuerdos del proyecto",
+      "labels": [
+        "P1",
+        "tipo/funcion",
+        "area/bloques"
+      ],
+      "milestone": "H3 · Programación por bloques",
+      "priority": "P1",
+      "depends_on": [
+        "PWV-020",
+        "PWV-021"
+      ],
+      "source_refs": [
+        "BLQ",
+        "SES"
+      ]
+    },
+    {
+      "id": "PWV-023",
+      "title": "[PWV-023] Ejecutar bloques continuos según el tiempo transcurrido",
+      "body": "## Objetivo\n\nDar significado temporal a «Mientras se ejecuta el juego» y probarlo con la antena giratoria del ejemplo.\n\n## Criterios de aceptación\n\n- [ ] Un programa puede leer el giro actual, aplicar una velocidad angular y usar el tiempo transcurrido para calcular el siguiente giro.\n- [ ] Con una antena configurada a 30°/s, medir el giro durante dos segundos con dos límites de fotogramas distintos. Registrar el error respecto a 60° con un margen de un paso de actualización.\n- [ ] Detener la ejecución detiene el giro. Dos clientes en la misma instancia observan una única evolución del ángulo.\n\n## Dependencias\n\n`PWV-020`, `PWV-021`\n\n## Referencia de proyecto\n\nReferencias del editor de bloques · pelota, balizas, mando, antena y caja de ritmo · Sesiones de desarrollo · confirmaciones y acuerdos del proyecto",
+      "labels": [
+        "P1",
+        "tipo/funcion",
+        "area/bloques"
+      ],
+      "milestone": "H3 · Programación por bloques",
+      "priority": "P1",
+      "depends_on": [
+        "PWV-020",
+        "PWV-021"
+      ],
+      "source_refs": [
+        "BLQ",
+        "SES"
+      ]
+    },
+    {
+      "id": "PWV-024",
+      "title": "[PWV-024] Guardar variables y referenciar otras piezas desde un programa",
+      "body": "## Objetivo\n\nAmpliar el editor para construir comportamientos como la caja de ritmo o la baliza de relevo.\n\n## Criterios de aceptación\n\n- [ ] El editor permite crear una variable con nombre, tipo y valor inicial, y leerla o escribirla en acciones y condiciones.\n- [ ] Una caja cuenta tres pulsaciones y cambia el color de una lámpara referenciada. Otra copia de la caja mantiene su propio contador.\n- [ ] Una baliza recuerda quién la agarró primero y acciona el puente al recogerla otra persona. Al retirar el destino, el editor indica qué referencia necesita corregirse.\n\n## Dependencias\n\n`PWV-021`, `PWV-022`\n\n## Referencia de proyecto\n\nReferencias del editor de bloques · pelota, balizas, mando, antena y caja de ritmo",
+      "labels": [
+        "P1",
+        "tipo/funcion",
+        "area/bloques"
+      ],
+      "milestone": "H3 · Programación por bloques",
+      "priority": "P1",
+      "depends_on": [
+        "PWV-021",
+        "PWV-022"
+      ],
+      "source_refs": [
+        "BLQ"
+      ]
+    },
+    {
+      "id": "PWV-025",
+      "title": "[PWV-025] Guardar un prefabricado y volver a instanciarlo",
+      "body": "## Objetivo\n\nConservar una creación de forma que otra sesión pueda reconstruir su geometría, propiedades y programa.\n\n## Criterios de aceptación\n\n- [ ] Guardar una pelota con color, rebote y un programa de agarre. Cerrar y volver a abrir el proyecto jugable permite recuperarla desde el juego.\n- [ ] Crear dos instancias del prefabricado guardado produce piezas distinguibles. Editar una instancia permite contrastar sus valores con la otra y con el prefabricado guardado.\n- [ ] Anotar qué datos se guardan y cómo identifica el juego el prefabricado y cada objeto colocado. Volver a agarrar la pieza recuperada ejecuta el programa guardado.\n\n## Dependencias\n\n`PWV-009`, `PWV-019`\n\n## Referencia de proyecto\n\nDocumento de definición · visión, plataforma, primera experiencia e intercambio · Biblioteca de diseño · Modo Creación e inspector · Referencias del editor de bloques · pelota, balizas, mando, antena y caja de ritmo",
+      "labels": [
+        "P1",
+        "tipo/funcion",
+        "area/prefabricados"
+      ],
+      "milestone": "H4 · Prefabricados y autoría",
+      "priority": "P1",
+      "depends_on": [
+        "PWV-009",
+        "PWV-019"
+      ],
+      "source_refs": [
+        "DEF",
+        "EDI",
+        "BLQ"
+      ]
+    },
+    {
+      "id": "PWV-026",
+      "title": "[PWV-026] Compartir prefabricados directamente y aplicar los permisos del creador",
+      "body": "## Objetivo\n\nPermitir que una persona entregue su creación a otra y determine qué operaciones admite.\n\n## Criterios de aceptación\n\n- [ ] La entrega directa identifica al creador y al destinatario con identidades que se conservan entre sesiones. El destinatario puede abrir y probar la creación recibida.\n- [ ] La configuración inicial concede probar y obtener una copia editable. Cambiar la concesión de copia altera la respuesta de autorización para ese destinatario. Probar ambos estados con la misma creación.\n- [ ] Documentar con dos usuarios la diferencia entre obtener permiso para editar un objeto de la instancia, probar el prefabricado y crear una copia. Registrar los casos permitidos y denegados.\n\n## Dependencias\n\n`PWV-013`, `PWV-025`\n\n## Referencia de proyecto\n\nDocumento de definición · visión, plataforma, primera experiencia e intercambio",
+      "labels": [
+        "P1",
+        "tipo/funcion",
+        "area/prefabricados"
+      ],
+      "milestone": "H4 · Prefabricados y autoría",
+      "priority": "P1",
+      "depends_on": [
+        "PWV-013",
+        "PWV-025"
+      ],
+      "source_refs": [
+        "DEF"
+      ]
+    },
+    {
+      "id": "PWV-027",
+      "title": "[PWV-027] Crear una copia editable y mostrar toda su cadena de autoría",
+      "body": "## Objetivo\n\nDar a cada copia un propietario reconocible sin perder la procedencia de la creación.\n\n## Criterios de aceptación\n\n- [ ] B hace una copia del prefabricado de A y modifica su rebote. Al cargar el original y la copia por separado, cada uno conserva el valor que le corresponde.\n- [ ] La ficha muestra el nombre del prefabricado y el dueño de esa versión arriba. En un primer fork, el autor de origen aparece junto al icono de bifurcación.\n- [ ] En una cadena A → B → C, la ficha de C muestra a C en cabecera y el desplegable permite identificar a B y a A. Reservar la zona de texto a la izquierda y la imagen a la derecha según el boceto.\n\n## Dependencias\n\n`PWV-025`, `PWV-026`\n\n## Referencia de proyecto\n\nDocumento de definición · visión, plataforma, primera experiencia e intercambio · Boceto de la ficha de un prefabricado derivado",
+      "labels": [
+        "P1",
+        "tipo/funcion",
+        "area/prefabricados"
+      ],
+      "milestone": "H4 · Prefabricados y autoría",
+      "priority": "P1",
+      "depends_on": [
+        "PWV-025",
+        "PWV-026"
+      ],
+      "source_refs": [
+        "DEF",
+        "FORK"
+      ]
+    },
+    {
+      "id": "PWV-028",
+      "title": "[PWV-028] Probar si dos jugadores distinguen edición, copia y procedencia",
+      "body": "## Objetivo\n\nResolver con jugadores las dos dudas de diseño que afectan a la ficha y a la acción de copiar.\n\n## Criterios de aceptación\n\n- [ ] Entregar una pelota y pedir una segunda que rebote más, conservando el rebote de la primera. Registrar el primer intento, el resultado y dónde pidieron ayuda.\n- [ ] Mostrar una cadena de tres autores y pedir que identifiquen al dueño de la copia, su origen inmediato y el original. Comparar «Varios creadores» e «Historial de versiones».\n- [ ] Dejar documentada la etiqueta elegida o el motivo para repetir la prueba. Resolver qué información ayuda en el texto inferior de la ficha a partir del comportamiento observado.\n\n## Dependencias\n\n`PWV-013`, `PWV-027`\n\n## Referencia de proyecto\n\nDocumento de definición · visión, plataforma, primera experiencia e intercambio · Boceto de la ficha de un prefabricado derivado",
+      "labels": [
+        "P1",
+        "tipo/verificacion",
+        "area/prefabricados"
+      ],
+      "milestone": "H4 · Prefabricados y autoría",
+      "priority": "P1",
+      "depends_on": [
+        "PWV-013",
+        "PWV-027"
+      ],
+      "source_refs": [
+        "DEF",
+        "FORK"
+      ]
+    },
+    {
+      "id": "PWV-029",
+      "title": "[PWV-029] Abrir, manejar y guardar la tablet tridimensional",
+      "body": "## Objetivo\n\nConvertir la tablet en el acceso común a Ajustes, Social y Mundos, preservando la privacidad de su pantalla.\n\n## Criterios de aceptación\n\n- [ ] Cada apertura muestra Inicio con los tres accesos. En escritorio una tecla la sitúa frente al jugador, libera el cursor para hacer clic y devuelve el control al cerrar.\n- [ ] En PC VR se extrae de la cintura, se sujeta con la mano, recibe toque o rayo y, al soltarla, flota y sigue al jugador. Se guarda en la cintura o con «Cerrar».\n- [ ] En dos clientes, el propietario ve el contenido y el otro ve por defecto la carcasa. Abrir o cerrar una tablet afecta solo a la interacción de su propietario.\n\n## Dependencias\n\n`PWV-002`, `PWV-012`\n\n## Referencia de proyecto\n\nBiblioteca de diseño · Tablet del menú y viaje entre mundos",
+      "labels": [
+        "P1",
+        "tipo/funcion",
+        "area/interfaz"
+      ],
+      "milestone": "H5 · Interfaz, mundos y lobby social",
+      "priority": "P1",
+      "depends_on": [
+        "PWV-002",
+        "PWV-012"
+      ],
+      "source_refs": [
+        "TAB"
+      ]
+    },
+    {
+      "id": "PWV-030",
+      "title": "[PWV-030] Aplicar los ajustes del jugador y los dos temas provisionales",
+      "body": "## Objetivo\n\nHacer que Ajustes controle acciones observables desde la tablet y use los temas elegidos para el prototipo.\n\n## Criterios de aceptación\n\n- [ ] Comprobar al menos un ajuste en cada apartado. Cubrir controles y accesibilidad, audio, micrófono y voz, gráficos y rendimiento, movimiento y comodidad en VR, y cuenta y privacidad. Registrar el efecto de cada ajuste.\n- [ ] Cambiar entre 02 «Ámbar y pizarra» en oscuro y 09 «Hielo y acero» en claro. En los dos temas se distinguen selección, foco, vista previa y controles deshabilitados.\n- [ ] Al volver a abrir la aplicación se recuperan las preferencias locales elegidas. Verificar desde el escritorio y desde el visor que la pantalla de ajustes se puede manejar por completo.\n\n## Dependencias\n\n`PWV-005`, `PWV-026`, `PWV-029`\n\n## Referencia de proyecto\n\nBiblioteca de diseño · Tablet del menú y viaje entre mundos · Comparativa de diez paletas · variantes 02 y 09 · Bocetos de movimiento XR · cruceta y teletransporte",
+      "labels": [
+        "P1",
+        "tipo/funcion",
+        "area/interfaz"
+      ],
+      "milestone": "H5 · Interfaz, mundos y lobby social",
+      "priority": "P1",
+      "depends_on": [
+        "PWV-005",
+        "PWV-026",
+        "PWV-029"
+      ],
+      "source_refs": [
+        "TAB",
+        "PAL",
+        "MOV"
+      ]
+    },
+    {
+      "id": "PWV-031",
+      "title": "[PWV-031] Consultar amigos, presencia, invitaciones y mensajes privados",
+      "body": "## Objetivo\n\nPermitir que dos participantes localicen a sus amigos, sepan con quién comparten instancia y se comuniquen.\n\n## Criterios de aceptación\n\n- [ ] Social muestra el estado de conexión de los amigos y la lista de personas en la instancia actual. Verificar conexión, salida y reconexión con dos cuentas de prueba.\n- [ ] Enviar y recibir una invitación y un mensaje privado desde dos cuentas. Un tercer usuario de la misma instancia solo ve la información que le corresponde.\n- [ ] El destinatario puede aceptar o declinar la invitación y el remitente ve el resultado. Ambas acciones identifican al amigo y a la sesión de destino.\n\n## Dependencias\n\n`PWV-012`, `PWV-026`, `PWV-029`\n\n## Referencia de proyecto\n\nBiblioteca de diseño · Tablet del menú y viaje entre mundos · Biblioteca de diseño · Pantalla de inicio",
+      "labels": [
+        "P1",
+        "tipo/funcion",
+        "area/social"
+      ],
+      "milestone": "H5 · Interfaz, mundos y lobby social",
+      "priority": "P1",
+      "depends_on": [
+        "PWV-012",
+        "PWV-026",
+        "PWV-029"
+      ],
+      "source_refs": [
+        "TAB",
+        "INI"
+      ]
+    },
+    {
+      "id": "PWV-032",
+      "title": "[PWV-032] Explorar mundos, crear instancias y aplicar sus reglas de entrada",
+      "body": "## Objetivo\n\nDar acceso a mundos y sesiones mediante un flujo común para la tablet, una invitación o la acción de unirse a un amigo.\n\n## Criterios de aceptación\n\n- [ ] Mundos permite buscar, consultar favoritos y recientes, escoger una instancia activa y entrar directamente. La lista de recientes se actualiza al llegar al destino elegido.\n- [ ] Crear una instancia pública y dos variantes privadas, una para amigos y otra solo por invitación. Probar «Unirse» desde Social con un amigo admitido y con una cuenta sin acceso.\n- [ ] Al crear la instancia se puede permitir o desactivar la colocación de portales. El viaje directo vuelve a comprobar el permiso vigente antes de entrar.\n\n## Dependencias\n\n`PWV-012`, `PWV-026`, `PWV-029`, `PWV-031`\n\n## Referencia de proyecto\n\nBiblioteca de diseño · Tablet del menú y viaje entre mundos",
+      "labels": [
+        "P1",
+        "tipo/funcion",
+        "area/mundos"
+      ],
+      "milestone": "H5 · Interfaz, mundos y lobby social",
+      "priority": "P1",
+      "depends_on": [
+        "PWV-012",
+        "PWV-026",
+        "PWV-029",
+        "PWV-031"
+      ],
+      "source_refs": [
+        "TAB"
+      ]
+    },
+    {
+      "id": "PWV-033",
+      "title": "[PWV-033] Colocar portales compartidos con una duración de 60 segundos",
+      "body": "## Objetivo\n\nPermitir que un grupo viaje al mismo destino atravesando un portal visible en la instancia.\n\n## Criterios de aceptación\n\n- [ ] En una instancia que admite portales, cualquier jugador puede elegir «Colocar portal» en la tablet y seleccionar un punto del suelo. Con la opción desactivada, la instancia rechaza la colocación.\n- [ ] El portal es visible para los participantes y se cierra automáticamente a los 60 segundos desde su aparición. Medir su duración con dos clientes.\n- [ ] Al atravesarlo, un participante autorizado llega al destino. Ante una instancia privada, un tercero sin acceso permanece en el mundo de origen.\n\n## Dependencias\n\n`PWV-032`\n\n## Referencia de proyecto\n\nBiblioteca de diseño · Tablet del menú y viaje entre mundos",
+      "labels": [
+        "P1",
+        "tipo/funcion",
+        "area/mundos"
+      ],
+      "milestone": "H5 · Interfaz, mundos y lobby social",
+      "priority": "P1",
+      "depends_on": [
+        "PWV-032"
+      ],
+      "source_refs": [
+        "TAB"
+      ]
+    },
+    {
+      "id": "PWV-034",
+      "title": "[PWV-034] Completar la pantalla de inicio y sus cuatro accesos",
+      "body": "## Objetivo\n\nReunir los flujos terminados en la pantalla que recibe al jugador al arrancar.\n\n## Criterios de aceptación\n\n- [ ] Mostrar el logotipo sobre un fondo sencillo y los accesos Jugar, Ajustes, Ver amigos conectados y Salir del juego. Todos responden en escritorio y PC VR.\n- [ ] Jugar lleva al lobby tanto en la primera visita como en las siguientes. Ajustes permite cambiar una preferencia y volver a la pantalla inicial.\n- [ ] Desde «Ver amigos conectados» se puede consultar un estado, mandar un mensaje y entrar en una instancia permitida. Salir termina la sesión de juego.\n\n## Dependencias\n\n`PWV-002`, `PWV-004`, `PWV-030`, `PWV-031`, `PWV-032`\n\n## Referencia de proyecto\n\nBiblioteca de diseño · Pantalla de inicio · Biblioteca de diseño · Mapa de inicio",
+      "labels": [
+        "P1",
+        "tipo/integracion",
+        "area/interfaz"
+      ],
+      "milestone": "H5 · Interfaz, mundos y lobby social",
+      "priority": "P1",
+      "depends_on": [
+        "PWV-002",
+        "PWV-004",
+        "PWV-030",
+        "PWV-031",
+        "PWV-032"
+      ],
+      "source_refs": [
+        "INI",
+        "MAP"
+      ]
+    },
+    {
+      "id": "PWV-035",
+      "title": "[PWV-035] Sincronizar la pantalla de vídeo del lobby entre participantes",
+      "body": "## Objetivo\n\nDar al grupo una pantalla común que cualquiera de los presentes pueda controlar.\n\n## Criterios de aceptación\n\n- [ ] Dos jugadores reproducen el mismo vídeo en la pantalla. Cualquiera de ellos puede iniciar o pausar la reproducción y ambos observan la misma acción.\n- [ ] Un participante que entra durante la reproducción recibe el vídeo y la posición vigentes. Registrar la diferencia observada en una prueba reproducible.\n- [ ] Dos acciones consecutivas desde usuarios distintos dejan un único estado compartido. Anotar el tipo de fuente de vídeo usado en esta primera entrega.\n\n## Dependencias\n\n`PWV-004`, `PWV-012`\n\n## Referencia de proyecto\n\nBiblioteca de diseño · Mapa de inicio",
+      "labels": [
+        "P1",
+        "tipo/funcion",
+        "area/social"
+      ],
+      "milestone": "H5 · Interfaz, mundos y lobby social",
+      "priority": "P1",
+      "depends_on": [
+        "PWV-004",
+        "PWV-012"
+      ],
+      "source_refs": [
+        "MAP"
+      ]
+    },
+    {
+      "id": "PWV-036",
+      "title": "[PWV-036] Dibujar, esquematizar y mover notas en la pizarra compartida",
+      "body": "## Objetivo\n\nUsar la pizarra del lobby para organizar un proyecto entre dos personas.\n\n## Criterios de aceptación\n\n- [ ] Desde la pizarra se puede dibujar a mano alzada, colocar y mover notas y trazar formas y líneas.\n- [ ] Un jugador en escritorio y otro en PC VR crean elementos distintos y ven los cambios del compañero en la misma pizarra.\n- [ ] Al entrar un tercer cliente durante la sesión, se recupera la composición visible, incluidas la posición de las notas y las formas existentes.\n\n## Dependencias\n\n`PWV-004`, `PWV-012`\n\n## Referencia de proyecto\n\nBiblioteca de diseño · Mapa de inicio",
+      "labels": [
+        "P1",
+        "tipo/funcion",
+        "area/social"
+      ],
+      "milestone": "H5 · Interfaz, mundos y lobby social",
+      "priority": "P1",
+      "depends_on": [
+        "PWV-004",
+        "PWV-012"
+      ],
+      "source_refs": [
+        "MAP"
+      ]
+    },
+    {
+      "id": "PWV-037",
+      "title": "[PWV-037] Mostrar el avatar y sus datos junto al espejo del lobby",
+      "body": "## Objetivo\n\nDar a cada persona una forma de comprobar cómo aparece su avatar y qué seguimiento está activo.\n\n## Criterios de aceptación\n\n- [ ] El usuario se ve ante el espejo y el holograma muestra nombre, altura, escala y accesorios equipados del avatar elegido.\n- [ ] En PC VR, el estado del seguimiento que muestra el holograma responde a un cambio comprobable del dispositivo. En escritorio, el estado identifica ese modo.\n- [ ] Probar con dos participantes de distintas escalas y verificar que cada consulta muestra los datos del avatar correspondiente.\n\n## Dependencias\n\n`PWV-002`, `PWV-004`, `PWV-012`\n\n## Referencia de proyecto\n\nBiblioteca de diseño · Mapa de inicio",
+      "labels": [
+        "P1",
+        "tipo/funcion",
+        "area/social"
+      ],
+      "milestone": "H5 · Interfaz, mundos y lobby social",
+      "priority": "P1",
+      "depends_on": [
+        "PWV-002",
+        "PWV-004",
+        "PWV-012"
+      ],
+      "source_refs": [
+        "MAP"
+      ]
+    },
+    {
+      "id": "PWV-038",
+      "title": "[PWV-038] Atraer una pieza cercana con un giro de muñeca",
+      "body": "## Objetivo\n\nImplementar la atracción física descrita en los apuntes y comprobar por separado la fijación, la trayectoria y la llegada.\n\n## Criterios de aceptación\n\n- [ ] Con la mano a 1,5 m o menos, apuntar a un objeto agarrable y fijarlo con un botón muestra rayo y contorno. La fijación se cancela a los cinco segundos sin gesto, al salir de alcance o al elegir otra pieza.\n- [ ] Un giro rápido hacia el jugador inicia un arco parabólico. La corrección hacia la mano móvil comienza a 30 cm y un obstáculo interpuesto produce una colisión física.\n- [ ] Con la mano libre, la pieza entra en el agarre al llegar. Con la mano ocupada, cae junto al jugador. Verificar ambos finales y probar un objeto a más de 1,5 m.\n\n## Dependencias\n\n`PWV-003`\n\n## Referencia de proyecto\n\nBiblioteca de diseño · Atracción de objetos en VR y boceto de trayectoria",
+      "labels": [
+        "P1",
+        "tipo/funcion",
+        "area/xr"
+      ],
+      "milestone": "H6 · Taller avanzado y validación integrada",
+      "priority": "P1",
+      "depends_on": [
+        "PWV-003"
+      ],
+      "source_refs": [
+        "ATR"
+      ]
+    },
+    {
+      "id": "PWV-039",
+      "title": "[PWV-039] Resolver dos atracciones simultáneas y enseñar el gesto en el taller",
+      "body": "## Objetivo\n\nExtender la atracción a la instancia compartida y convertirla en una práctica opcional de PC VR.\n\n## Criterios de aceptación\n\n- [ ] Si dos jugadores intentan fijar la misma pieza, la instancia concede la prioridad a quien la fija primero. Probar con dos solicitudes próximas y después de cancelar la primera.\n- [ ] Al vencer la fijación o salir su titular, la pieza vuelve a estar disponible. Los clientes coinciden en quién la tiene fijada o agarrada.\n- [ ] El panel ofrece una práctica opcional en el taller que pide atraer una pieza del suelo y recogerla. Reconoce el agarre y permite volver al juego libre.\n\n## Dependencias\n\n`PWV-011`, `PWV-015`, `PWV-038`\n\n## Referencia de proyecto\n\nBiblioteca de diseño · Atracción de objetos en VR y boceto de trayectoria · Biblioteca de diseño · Tutorial del taller",
+      "labels": [
+        "P1",
+        "tipo/integracion",
+        "area/xr"
+      ],
+      "milestone": "H6 · Taller avanzado y validación integrada",
+      "priority": "P1",
+      "depends_on": [
+        "PWV-011",
+        "PWV-015",
+        "PWV-038"
+      ],
+      "source_refs": [
+        "ATR",
+        "TUT"
+      ]
+    },
+    {
+      "id": "PWV-040",
+      "title": "[PWV-040] Ensamblar, agrupar y sujetar construcciones en el banco",
+      "body": "## Objetivo\n\nHacer que varias piezas se puedan montar y probar como una construcción compartible.\n\n## Criterios de aceptación\n\n- [ ] Desde el banco, duplicar piezas, colocarlas respecto a un pivote y agruparlas. Mover el conjunto conserva las posiciones relativas de sus miembros.\n- [ ] Sujetar la construcción al banco permite abrir el inspector y el editor de bloques para probar el conjunto. Soltarla devuelve la construcción a la simulación y el compañero observa el mismo montaje.\n- [ ] Guardar y recuperar el conjunto restaura los miembros y sus relaciones. Colocar una segunda copia permite probarla por separado.\n\n## Dependencias\n\n`PWV-004`, `PWV-007`, `PWV-013`, `PWV-020`, `PWV-025`\n\n## Referencia de proyecto\n\nBiblioteca de diseño · Mapa de inicio · Documento de definición · visión, plataforma, primera experiencia e intercambio · Ejemplo visual de construcción y programación de engranajes",
+      "labels": [
+        "P1",
+        "tipo/funcion",
+        "area/taller"
+      ],
+      "milestone": "H6 · Taller avanzado y validación integrada",
+      "priority": "P1",
+      "depends_on": [
+        "PWV-004",
+        "PWV-007",
+        "PWV-013",
+        "PWV-020",
+        "PWV-025"
+      ],
+      "source_refs": [
+        "MAP",
+        "DEF",
+        "ENG"
+      ]
+    },
+    {
+      "id": "PWV-041",
+      "title": "[PWV-041] Ampliar el catálogo de formas a partir de los montajes previstos",
+      "body": "## Objetivo\n\nPasar de las tres formas iniciales al catálogo previsto de primitivas de Godot, en lotes que puedan probarse.\n\n## Criterios de aceptación\n\n- [ ] Inventariar las formas previstas y anotar por forma sus parámetros visibles, previsualización y representación física. Registrar las que necesiten una regla propia.\n- [ ] Entregar un primer lote con el que un jugador pueda construir un disco y un diente triangular para el ejemplo de engranajes. Comprobar tamaño, colocación y colisión en los dos modos.\n- [ ] Para cada forma restante, registrar cómo se obtiene y su prueba de aceptación, o abrir una issue de lote enlazada. El inventario distingue formas disponibles y pendientes.\n\n## Dependencias\n\n`PWV-007`, `PWV-009`\n\n## Referencia de proyecto\n\nDocumento de definición · visión, plataforma, primera experiencia e intercambio · Biblioteca de diseño · Modo Creación e inspector · Ejemplo visual de construcción y programación de engranajes",
+      "labels": [
+        "P1",
+        "tipo/funcion",
+        "area/creacion"
+      ],
+      "milestone": "H6 · Taller avanzado y validación integrada",
+      "priority": "P1",
+      "depends_on": [
+        "PWV-007",
+        "PWV-009"
+      ],
+      "source_refs": [
+        "DEF",
+        "EDI",
+        "ENG"
+      ]
+    },
+    {
+      "id": "PWV-042",
+      "title": "[PWV-042] Construir y programar dos engranajes accionados por una manivela",
+      "body": "## Objetivo\n\nUtilizar un montaje avanzado para comprobar qué puede construir un jugador desde un escenario vacío.\n\n## Criterios de aceptación\n\n- [ ] Desde el catálogo, montar un disco con pivote central, añadir un diente triangular, duplicarlo y agrupar las piezas. Repetir para obtener las dos ruedas del ejemplo.\n- [ ] Conectar una manivela y programar la relación de giro con bloques desde el juego. Con 12 y 24 dientes, un cuarto de vuelta de la primera rueda mueve la segunda un octavo de vuelta en sentido contrario.\n- [ ] Otra persona carga o prueba el montaje y reproduce el resultado. Registrar si la dificultad apareció al construir las piezas, definir el pivote, conectarlas o programarlas.\n\n## Dependencias\n\n`PWV-024`, `PWV-040`, `PWV-041`\n\n## Referencia de proyecto\n\nDocumento de definición · visión, plataforma, primera experiencia e intercambio · Ejemplo visual de construcción y programación de engranajes · Referencias del editor de bloques · pelota, balizas, mando, antena y caja de ritmo",
+      "labels": [
+        "P2",
+        "tipo/verificacion",
+        "area/taller"
+      ],
+      "milestone": "H6 · Taller avanzado y validación integrada",
+      "priority": "P2",
+      "depends_on": [
+        "PWV-024",
+        "PWV-040",
+        "PWV-041"
+      ],
+      "source_refs": [
+        "DEF",
+        "ENG",
+        "BLQ"
+      ]
+    },
+    {
+      "id": "PWV-043",
+      "title": "[PWV-043] Medir piezas, distancias, alturas y ángulos con reglas holográficas",
+      "body": "## Objetivo\n\nHacer utilizables los cuatro tipos de medida previstos para las pruebas del taller.\n\n## Criterios de aceptación\n\n- [ ] Seleccionar una pieza da su ancho, alto y fondo. Seleccionar dos puntos muestra la distancia entre ellos con unidad visible.\n- [ ] Desde el suelo medir la altura de un punto y sobre un plano inclinado leer el ángulo. Comprobar con una pieza y una rampa de dimensiones conocidas.\n- [ ] Un jugador en escritorio y otro en PC VR pueden repetir la lectura sobre las mismas referencias y obtener el mismo valor a la precisión mostrada.\n\n## Dependencias\n\n`PWV-004`, `PWV-007`, `PWV-013`\n\n## Referencia de proyecto\n\nBiblioteca de diseño · Mapa de inicio",
+      "labels": [
+        "P1",
+        "tipo/funcion",
+        "area/taller"
+      ],
+      "milestone": "H6 · Taller avanzado y validación integrada",
+      "priority": "P1",
+      "depends_on": [
+        "PWV-004",
+        "PWV-007",
+        "PWV-013"
+      ],
+      "source_refs": [
+        "MAP"
+      ]
+    },
+    {
+      "id": "PWV-044",
+      "title": "[PWV-044] Pilotar el elevador del taller con controles compartidos",
+      "body": "## Objetivo\n\nTransportar hasta dos personas a cualquier zona alcanzable del taller mediante los mandos de la plataforma.\n\n## Criterios de aceptación\n\n- [ ] En VR un joystick controla X/Z y el otro controla Y. Cada ocupante puede tomar el joystick libre. En escritorio se toma el control y se pilota con teclas de movimiento y altura.\n- [ ] Soltar ambos joysticks en pilotaje manual detiene la plataforma en su posición. Ante una pared, frena en el eje bloqueado y aún permite movimiento en los ejes libres.\n- [ ] Si la plataforma permanece vacía diez segundos, vuelve a la base lateral. Volver a subir antes de ese plazo cancela el regreso. Probar con uno y dos ocupantes, verificar el límite de dos y contrastar la posición que ven los dos clientes.\n\n## Dependencias\n\n`PWV-004`, `PWV-015`\n\n## Referencia de proyecto\n\nBiblioteca de diseño · Mapa de inicio",
+      "labels": [
+        "P1",
+        "tipo/funcion",
+        "area/taller"
+      ],
+      "milestone": "H6 · Taller avanzado y validación integrada",
+      "priority": "P1",
+      "depends_on": [
+        "PWV-004",
+        "PWV-015"
+      ],
+      "source_refs": [
+        "MAP"
+      ]
+    },
+    {
+      "id": "PWV-045",
+      "title": "[PWV-045] Equipar el exterior para pruebas verticales y horizontales",
+      "body": "## Objetivo\n\nConectar el taller con un exterior en el que los jugadores puedan comparar alturas, recorridos y trayectorias.\n\n## Criterios de aceptación\n\n- [ ] Un portón permite pasar directamente del taller al exterior y volver. La zona incluye torre o plataformas y marcas de distancia legibles.\n- [ ] Hay una pista marcada para trayectorias de vehículos y una zona de despegue y aterrizaje para pruebas de vuelo y maniobras.\n- [ ] Realizar una caída desde dos alturas y un lanzamiento horizontal. Se puede identificar el origen y el punto de llegada con las referencias de la zona.\n\n## Dependencias\n\n`PWV-004`, `PWV-010`\n\n## Referencia de proyecto\n\nBiblioteca de diseño · Mapa de inicio",
+      "labels": [
+        "P2",
+        "tipo/funcion",
+        "area/taller"
+      ],
+      "milestone": "H6 · Taller avanzado y validación integrada",
+      "priority": "P2",
+      "depends_on": [
+        "PWV-004",
+        "PWV-010"
+      ],
+      "source_refs": [
+        "MAP"
+      ]
+    },
+    {
+      "id": "PWV-046",
+      "title": "[PWV-046] Controlar velocidad, dirección y ráfagas en la sala de viento",
+      "body": "## Objetivo\n\nAñadir una sala anexa al taller donde sea posible observar el efecto del viento sobre objetos de prueba.\n\n## Criterios de aceptación\n\n- [ ] Desde el taller se accede a la sala y a sus controles para encender y apagar el viento, regular velocidad, cambiar dirección y activar ráfagas.\n- [ ] Repetir un lanzamiento desde la misma posición con viento apagado y con dos configuraciones distintas. Registrar el desplazamiento observado.\n- [ ] Con dos clientes, los ajustes del panel coinciden y ambos ven reaccionar a la misma pieza en la sala.\n\n## Dependencias\n\n`PWV-004`, `PWV-010`, `PWV-013`\n\n## Referencia de proyecto\n\nBiblioteca de diseño · Mapa de inicio",
+      "labels": [
+        "P2",
+        "tipo/funcion",
+        "area/taller"
+      ],
+      "milestone": "H6 · Taller avanzado y validación integrada",
+      "priority": "P2",
+      "depends_on": [
+        "PWV-004",
+        "PWV-010",
+        "PWV-013"
+      ],
+      "source_refs": [
+        "MAP"
+      ]
+    },
+    {
+      "id": "PWV-047",
+      "title": "[PWV-047] Comparar hombro y cintura en el reto cooperativo de rebote",
+      "body": "## Objetivo\n\nConvertir la ampliación opcional del ejercicio cooperativo en una prueba que se pueda repetir con dos jugadores.\n\n## Criterios de aceptación\n\n- [ ] Al acabar el pase, el grupo puede elegir el reto o volver al taller. La actividad explica desde qué hombro se suelta la pelota y qué cintura sirve de referencia.\n- [ ] Dos jugadores ajustan con permiso el rebote de la misma pelota y la dejan caer desde la referencia acordada. Pueden comparar su punto más alto con la cintura y repetir.\n- [ ] Registrar cómo se obtienen ambas alturas en escritorio y PC VR, qué tolerancia admite la prueba y el resultado de intercambiar los papeles.\n\n## Dependencias\n\n`PWV-016`, `PWV-043`\n\n## Referencia de proyecto\n\nBiblioteca de diseño · Tutorial del taller · Documento de definición · visión, plataforma, primera experiencia e intercambio",
+      "labels": [
+        "P2",
+        "tipo/funcion",
+        "area/tutorial"
+      ],
+      "milestone": "H6 · Taller avanzado y validación integrada",
+      "priority": "P2",
+      "depends_on": [
+        "PWV-016",
+        "PWV-043"
+      ],
+      "source_refs": [
+        "TUT",
+        "DEF"
+      ]
+    },
+    {
+      "id": "PWV-048",
+      "title": "[PWV-048] Validar una compilación integrada del taller y las funciones sociales",
+      "body": "## Objetivo\n\nEntregar una compilación identificable de PC con los recorridos de creación, colaboración y viaje probados en conjunto.\n\n## Criterios de aceptación\n\n- [ ] Desde un arranque limpio, dos personas entran en el lobby, crean y programan una pieza, guardan o comparten una copia y se reúnen de nuevo mediante una invitación o un portal permitido.\n- [ ] Durante el recorrido, comprobar que el vídeo y la pizarra son compartidos, la pantalla propia de la tablet es privada y el banco, el espejo y el elevador siguen respondiendo tras un viaje de ida y vuelta.\n- [ ] Con dos clientes, eliminar una creación permitida actualiza el mundo de ambos y libera las selecciones, agarres y referencias afectadas. Probar también el intento de eliminarla desde una cuenta sin permiso.\n- [ ] Registrar versión, equipo, modo y tiempos de fotograma en reposo y durante la edición compartida en el taller. Entregar pasos para repetirlos y un resultado por incidencia y por combinación de dispositivos probada.\n\n## Dependencias\n\n`PWV-014`, `PWV-021`, `PWV-028`, `PWV-033`, `PWV-034`, `PWV-035`, `PWV-036`, `PWV-037`, `PWV-039`, `PWV-040`, `PWV-044`\n\n## Referencia de proyecto\n\nDocumento de definición · visión, plataforma, primera experiencia e intercambio · Biblioteca de diseño · Mapa de inicio · Biblioteca de diseño · Tablet del menú y viaje entre mundos · Biblioteca de diseño · Atracción de objetos en VR y boceto de trayectoria",
+      "labels": [
+        "P1",
+        "tipo/verificacion",
+        "area/base"
+      ],
+      "milestone": "H6 · Taller avanzado y validación integrada",
+      "priority": "P1",
+      "depends_on": [
+        "PWV-014",
+        "PWV-021",
+        "PWV-028",
+        "PWV-033",
+        "PWV-034",
+        "PWV-035",
+        "PWV-036",
+        "PWV-037",
+        "PWV-039",
+        "PWV-040",
+        "PWV-044"
+      ],
+      "source_refs": [
+        "DEF",
+        "MAP",
+        "TAB",
+        "ATR"
+      ]
+    }
+  ]
+}
