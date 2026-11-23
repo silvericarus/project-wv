@@ -1,0 +1,68 @@
+[gd_scene format=3 uid="uid://duliku25k4bdp"]
+
+[ext_resource type="Material" path="res://addons/csg_blockout/res/materials/mat_grid_light.tres" id="1_3bpn7"]
+[ext_resource type="Material" path="res://addons/csg_blockout/res/materials/mat_grid_orange.tres" id="2_75asy"]
+
+[node name="MainLobbyTemp" type="Node3D" unique_id=1735487650]
+
+[node name="Workshop" type="Node3D" parent="." unique_id=1631122191]
+
+[node name="Room" type="CSGCombiner3D" parent="Workshop" unique_id=1615506033]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38, 1.5, 23.45308)
+use_collision = true
+
+[node name="Shell" type="CSGBox3D" parent="Workshop/Room" unique_id=874243588]
+size = Vector3(60, 3, 63)
+material = ExtResource("1_3bpn7")
+
+[node name="Hollow" type="CSGBox3D" parent="Workshop/Room" unique_id=1865366615]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.13, 0)
+operation = 2
+size = Vector3(59.5, 2.76, 62.5)
+material = ExtResource("1_3bpn7")
+
+[node name="Door" type="CSGBox3D" parent="Workshop/Room" unique_id=2053981820]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.875, -0.20000017, -23.957687)
+operation = 2
+size = Vector3(1, 2.1, 0.29000014)
+material = ExtResource("1_3bpn7")
+
+[node name="Cut" type="CSGBox3D" parent="Workshop/Room" unique_id=23835893]
+transform = Transform3D(-1, 0, 0, 0, 0, -1, 0, -1, 0, -1, 0, -31.375)
+operation = 2
+size = Vector3(12, 0.26999825, 3)
+material = ExtResource("1_3bpn7")
+
+[node name="Floor" type="CSGBox3D" parent="Workshop/Room" unique_id=726355123]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.5, -0.875, -14.453079)
+size = Vector3(1, 0.75, 2)
+material = ExtResource("2_75asy")
+
+[node name="LobbyArea" type="Node3D" parent="." unique_id=1152818662]
+
+[node name="Room" type="CSGCombiner3D" parent="LobbyArea" unique_id=1180047290]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+use_collision = true
+
+[node name="Shell" type="CSGBox3D" parent="LobbyArea/Room" unique_id=988767095]
+size = Vector3(16, 3, 16)
+material = ExtResource("1_3bpn7")
+
+[node name="Hollow" type="CSGBox3D" parent="LobbyArea/Room" unique_id=311116757]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.13, 0)
+operation = 2
+size = Vector3(15.5, 2.76, 15.5)
+material = ExtResource("1_3bpn7")
+
+[node name="Door" type="CSGBox3D" parent="LobbyArea/Room" unique_id=45620921]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -7.874999, -0.20000005, -0.5)
+operation = 2
+size = Vector3(1, 2.1, 0.29000205)
+material = ExtResource("1_3bpn7")
+
+[node name="Block" type="CSGBox3D" parent="LobbyArea/Room" unique_id=1513197392]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -30, -1.25, -29.8)
+size = Vector3(76, 0.01, 44)
+material = ExtResource("1_3bpn7")
+
+[node name="ExteriorZone" type="Node3D" parent="." unique_id=479790996]

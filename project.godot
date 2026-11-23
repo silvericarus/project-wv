@@ -8,6 +8,10 @@
 
 config_version=5
 
+[addons]
+
+csg_blockout/material_preset=3
+
 [application]
 
 config/name="Project Wide View"
@@ -18,6 +22,10 @@ config/icon="res://icon.svg"
 [editor]
 
 run/main_run_args="--xr-mode off"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/csg_blockout/plugin.cfg")
 
 [input]
 
