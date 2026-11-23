@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://buuyqy18wv724" path="res://Scripts/xr_right_hand_menu.gd" id="7_ynf5e"]
 [ext_resource type="Texture2D" uid="uid://n7xdifosc1km" path="res://Images/floor_tile.png" id="9_d1ilt"]
 [ext_resource type="PackedScene" uid="uid://dh2clb8t3lg4w" path="res://Scenes/physics_cube.tscn" id="11_d1ilt"]
+[ext_resource type="PackedScene" uid="uid://duliku25k4bdp" path="res://Scenes/main_lobby_temp.tscn" id="12_6iyac"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jjgbg"]
 albedo_color = Color(1, 0.50980395, 0, 1)
@@ -47,18 +48,14 @@ size = Vector2(8, 8)
 [sub_resource type="BoxShape3D" id="BoxShape3D_owum4"]
 size = Vector3(8, 0.2, 8)
 
-[sub_resource type="BoxMesh" id="BoxMesh_6cx45"]
-size = Vector3(0.8, 0.8, 0.6)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_344ge"]
-size = Vector3(0.8, 0.8, 0.6)
-
 [node name="Main" type="Node3D" unique_id=2045035479]
 script = ExtResource("1_jjgbg")
 
 [node name="DesktopPlayer" parent="." unique_id=2080402090 instance=ExtResource("2_hptm8")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
 
 [node name="XROrigin3D" type="XROrigin3D" parent="." unique_id=825873006]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
 script = ExtResource("2_bo1nx")
 
 [node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D" unique_id=1870584449]
@@ -140,16 +137,8 @@ process_mode = 4
 script = ExtResource("3_8gbba")
 
 [node name="PhysicsCube" parent="." unique_id=750296286 instance=ExtResource("11_d1ilt")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -0.7)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.539877, 1.4800727, 9.033599)
 
-[node name="TestStand" type="StaticBody3D" parent="." unique_id=214607290]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, -0.7)
-collision_mask = 3
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="TestStand" unique_id=105037085]
-mesh = SubResource("BoxMesh_6cx45")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="TestStand" unique_id=1510967675]
-shape = SubResource("BoxShape3D_344ge")
+[node name="MainLobbyTemp" parent="." unique_id=1735487650 instance=ExtResource("12_6iyac")]
 
 [editable path="XROrigin3D/RightHandMenu"]
